@@ -1,0 +1,393 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import React from "react";
+
+export default function About() {
+  return (
+    <main style={styles.main}>
+      <div style={styles.backgroundGlow}></div>
+
+      {/* HERO */}
+      <section style={styles.hero}>
+        <motion.h1
+          style={styles.title}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          About <span style={styles.highlight}>Our 3D Studio</span>
+        </motion.h1>
+
+        <motion.p
+          style={styles.text}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          We specialize in building immersive 3D websites and interactive digital
+          experiences that elevate brands in the modern digital era.
+        </motion.p>
+      </section>
+
+      {/* ABOUT */}
+      <section style={styles.section}>
+        <div style={styles.container}>
+          <div style={styles.aboutFlex}>
+
+            <motion.div
+              style={styles.imageWrapper}
+              initial={{ opacity: 0, x: -100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <Image
+                src="/about logo.jpg"
+                alt="3D Studio Work"
+                width={500}
+                height={400}
+                style={styles.image}
+              />
+            </motion.div>
+
+            <motion.div
+              style={styles.contentBox}
+              initial={{ opacity: 0, x: 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+              viewport={{ once: true }}
+            >
+              <h2 style={styles.sectionHeading}>Who We Are</h2>
+
+              <p style={styles.paragraph}>
+                We are a creative 3D web development studio focused on delivering
+                high-performance digital solutions blending creativity and
+                technology.
+              </p>
+
+              <p style={styles.paragraph}>
+                From product modeling to architectural visualization and
+                interactive experiences, we help businesses stand out with
+                innovative solutions.
+              </p>
+
+              <p style={styles.paragraph}>
+                Our team combines design excellence with modern development
+                frameworks to create fast, responsive and visually stunning
+                digital platforms.
+              </p>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* JOURNEY */}
+      <section style={styles.journeySection}>
+        <div style={styles.container}>
+          <motion.h2
+            style={styles.journeyTitle}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            Our Journey
+          </motion.h2>
+
+          <div style={styles.timeline}>
+            {journeyData.map((item, index) => (
+              <motion.div
+                key={index}
+                style={styles.timelineItem}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -80 : 80 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div style={styles.timelineDot}></div>
+                <h3 style={styles.timelineYear}>{item.year}</h3>
+                <p style={styles.timelineText}>{item.text}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section style={styles.cta}>
+        <h2 style={styles.ctaTitle}>
+          Let’s Build Something Amazing Together
+        </h2>
+
+        <motion.div whileHover={{ scale: 1.08 }}>
+          <Link href="/contact" style={styles.button}>
+            Start Your Project
+          </Link>
+        </motion.div>
+      </section>
+
+      {/* RESPONSIVE FIX */}
+      <style>{`
+
+      html,body{
+        margin:0;
+        padding:0;
+        overflow-x:hidden;
+        max-width:100%;
+      }
+
+      *{
+        box-sizing:border-box;
+      }
+
+      img{
+        max-width:100%;
+        height:auto;
+      }
+
+      section{
+        width:100%;
+      }
+
+      @media (max-width:1024px){
+
+        h1{
+          font-size:42px !important;
+        }
+
+        h2{
+          font-size:30px !important;
+        }
+
+      }
+
+      @media (max-width:768px){
+
+        section{
+          padding:80px 20px !important;
+        }
+
+        h1{
+          font-size:34px !important;
+        }
+
+        h2{
+          font-size:26px !important;
+        }
+
+        p{
+          font-size:16px !important;
+        }
+
+        div[style*="flex"]{
+          flex-direction:column !important;
+          gap:30px !important;
+        }
+
+      }
+
+      @media (max-width:480px){
+
+        section{
+          padding:60px 16px !important;
+        }
+
+        h1{
+          font-size:28px !important;
+        }
+
+        h2{
+          font-size:22px !important;
+        }
+
+        p{
+          font-size:15px !important;
+          line-height:1.6 !important;
+        }
+
+      }
+
+      `}</style>
+    </main>
+  );
+}
+
+const journeyData = [
+  {
+    year: "2021 – Foundation",
+    text: "Our studio began with a passion for 3D creativity and immersive web innovation."
+  },
+  {
+    year: "2022 – Growth",
+    text: "Expanded into architectural visualization and advanced 3D website experiences."
+  },
+  {
+    year: "2023 – Innovation",
+    text: "Integrated modern animation frameworks and high-performance rendering solutions."
+  },
+  {
+    year: "Today – Excellence",
+    text: "Delivering premium digital solutions to brands worldwide with precision and creativity."
+  }
+];
+
+const styles: { [key: string]: React.CSSProperties } = {
+
+  main:{
+    background:"#0a0a0a",
+    color:"white",
+    fontFamily:"Arial, sans-serif",
+    overflowX:"hidden",
+    paddingTop:"80px",
+    position:"relative"
+  },
+
+  backgroundGlow:{
+    position:"absolute",
+    width:"600px",
+    height:"600px",
+    background:"radial-gradient(circle,#00f5ff40,transparent 70%)",
+    top:"-100px",
+    left:"-100px",
+    filter:"blur(120px)"
+  },
+
+  hero:{
+    padding:"120px 20px",
+    textAlign:"center"
+  },
+
+  title:{
+    fontSize:"50px",
+    marginBottom:"20px"
+  },
+
+  highlight:{
+    color:"#00f5ff"
+  },
+
+  text:{
+    maxWidth:"800px",
+    margin:"0 auto",
+    opacity:0.85,
+    fontSize:"18px",
+    lineHeight:1.8
+  },
+
+  section:{
+    padding:"100px 20px"
+  },
+
+  container:{
+    maxWidth:"1100px",
+    margin:"auto"
+  },
+
+  aboutFlex:{
+    display:"flex",
+    flexWrap:"wrap",
+    alignItems:"center",
+    justifyContent:"center",
+    gap:"60px"
+  },
+
+  imageWrapper:{
+    borderRadius:"20px",
+    overflow:"hidden",
+    maxWidth:"500px",
+    width:"100%"
+  },
+
+  image:{
+    borderRadius:"20px",
+    width:"100%",
+    height:"auto"
+  },
+
+  contentBox:{
+    flex:1,
+    minWidth:"280px"
+  },
+
+  sectionHeading:{
+    fontSize:"36px",
+    color:"#00f5ff",
+    marginBottom:"20px"
+  },
+
+  paragraph:{
+    marginBottom:"20px",
+    lineHeight:1.8,
+    opacity:0.85
+  },
+
+  journeySection:{
+    padding:"120px 20px",
+    background:"#0f0f0f"
+  },
+
+  journeyTitle:{
+    fontSize:"40px",
+    textAlign:"center",
+    marginBottom:"60px",
+    color:"#00f5ff"
+  },
+
+  timeline:{
+    maxWidth:"900px",
+    margin:"auto",
+    display:"flex",
+    flexDirection:"column",
+    gap:"60px"
+  },
+
+  timelineItem:{
+    position:"relative",
+    paddingLeft:"40px",
+    borderLeft:"2px solid #00f5ff40"
+  },
+
+  timelineDot:{
+    position:"absolute",
+    left:"-10px",
+    top:"5px",
+    width:"18px",
+    height:"18px",
+    background:"#00f5ff",
+    borderRadius:"50%"
+  },
+
+  timelineYear:{
+    fontSize:"22px",
+    marginBottom:"10px"
+  },
+
+  timelineText:{
+    opacity:0.8,
+    lineHeight:1.8
+  },
+
+  cta:{
+    padding:"120px 20px",
+    textAlign:"center"
+  },
+
+  ctaTitle:{
+    fontSize:"40px",
+    marginBottom:"30px"
+  },
+
+  button:{
+    background:"linear-gradient(90deg,#00f5ff,#0044ff)",
+    color:"white",
+    padding:"16px 40px",
+    borderRadius:"50px",
+    textDecoration:"none"
+  }
+
+};
