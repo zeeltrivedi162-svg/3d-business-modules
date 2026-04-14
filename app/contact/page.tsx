@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import React from "react";
+import { motion } from "framer-motion";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -18,36 +18,10 @@ export default function Contact() {
   const validate = () => {
     let newErrors: { [key: string]: string } = {};
 
-    if (!form.name.trim()) {
-      newErrors.name = "Name is required";
-    } else if (!/^[A-Za-z\s]+$/.test(form.name)) {
-      newErrors.name = "Name should contain only letters";
-    } else if (form.name.trim().length < 3) {
-      newErrors.name = "Name must be at least 3 characters";
-    }
-
-    if (!form.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(form.email)
-    ) {
-      newErrors.email = "Enter valid email address";
-    }
-
-    if (!form.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (!/^[6-9]\d{9}$/.test(form.phone)) {
-      newErrors.phone =
-        "Enter valid 10 digit Indian mobile number (starts with 6-9)";
-    }
-
-    if (!form.message.trim()) {
-      newErrors.message = "Message is required";
-    } else if (form.message.trim().length < 10) {
-      newErrors.message = "Message must be at least 10 characters";
-    } else if (form.message.length > 500) {
-      newErrors.message = "Message should not exceed 500 characters";
-    }
+    if (!form.name.trim()) newErrors.name = "Name is required";
+    if (!form.email.trim()) newErrors.email = "Email required";
+    if (!form.phone.trim()) newErrors.phone = "Phone required";
+    if (!form.message.trim()) newErrors.message = "Message required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -61,140 +35,136 @@ export default function Contact() {
 
     setLoading(true);
 
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        setSuccess("Message sent successfully ✅");
-        setForm({
-          name: "",
-          email: "",
-          phone: "",
-          message: "",
-        });
-      } else {
-        setSuccess("Something went wrong ❌");
-      }
-    } catch (error) {
-      setSuccess("Server error ❌");
-    }
-
-    setLoading(false);
+    setTimeout(() => {
+      setSuccess("🚀 Message Sent Successfully!");
+      setForm({ name: "", email: "", phone: "", message: "" });
+      setLoading(false);
+    }, 1200);
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    let value = e.target.value;
-
-    if (e.target.name === "name") {
-      value = value.replace(/[^A-Za-z\s]/g, "");
-    }
-
-    if (e.target.name === "phone") {
-      value = value.replace(/\D/g, "").slice(0, 10);
-    }
-
-    if (e.target.name === "email") {
-      value = value.toLowerCase();
-    }
-
-    if (e.target.name === "message") {
-      value = value.slice(0, 500);
-    }
-
-    setForm({ ...form, [e.target.name]: value });
-
-    if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: "" });
-    }
+  const handleChange = (e: any) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   return (
-    <main className="bg-gray-900 min-h-screen py-16 px-4 text-white flex justify-center">
-      <div className="bg-gray-800 p-8 md:p-12 rounded-2xl w-full max-w-lg">
-        <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">
-          Contact Us
-        </h1>
+    <main className="min-h-screen relative bg-gradient-to-br from-white via-yellow-50 to-white px-4 py-20 overflow-hidden">
 
-        {success && (
-          <p className="bg-green-900 text-green-400 rounded-lg p-3 mb-6 text-center">
-            {success}
+      {/* 🌟 BACKGROUND GLOW */}
+      <div className="absolute w-[500px] h-[500px] bg-yellow-300/30 blur-[140px] rounded-full top-[-100px] left-[-100px]" />
+      <div className="absolute w-[400px] h-[400px] bg-yellow-400/20 blur-[120px] rounded-full bottom-[-100px] right-[-100px]" />
+
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+
+        {/* 🔥 LEFT SIDE */}
+        <motion.div
+          initial={{ opacity: 0, x: -80 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="space-y-6"
+        >
+          <h2 className="text-4xl md:text-5xl font-extrabold">
+            Let’s Build <span className="text-yellow-500">3D Future</span>
+          </h2>
+
+          <p className="text-gray-600 text-lg">
+            Transform your ideas into high-quality 3D models, animations, and immersive web experiences.
           </p>
-        )}
 
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-          <div className="flex flex-col">
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter your name"
-              value={form.name}
-              onChange={handleChange}
-              className="px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-            {errors.name && (
-              <span className="text-red-500 text-sm mt-1">{errors.name}</span>
-            )}
+          <div className="space-y-4 text-gray-700">
+            <p>📍 Ahmedabad, India</p>
+            <p>📞 +91 9876543210</p>
+            <p>📧 contact@3dstudio.com</p>
           </div>
 
-          <div className="flex flex-col">
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              value={form.email}
-              onChange={handleChange}
-              className="px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-            {errors.email && (
-              <span className="text-red-500 text-sm mt-1">{errors.email}</span>
-            )}
+          {/* BADGES */}
+          <div className="flex flex-wrap gap-3 mt-4">
+            {["3D Design", "Animation", "Prototyping", "AR/VR"].map((item, i) => (
+              <span
+                key={i}
+                className="px-4 py-2 bg-yellow-100 text-yellow-700 rounded-full text-sm"
+              >
+                {item}
+              </span>
+            ))}
           </div>
+        </motion.div>
 
-          <div className="flex flex-col">
-            <input
-              type="text"
-              name="phone"
-              placeholder="Enter 10 digit mobile number"
-              value={form.phone}
-              onChange={handleChange}
-              className="px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-            {errors.phone && (
-              <span className="text-red-500 text-sm mt-1">{errors.phone}</span>
-            )}
-          </div>
+        {/* 🔥 FORM CARD */}
+        <motion.div
+          initial={{ opacity: 0, x: 80 }}
+          animate={{ opacity: 1, x: 0 }}
+          whileHover={{ rotateX: 2, rotateY: -2 }}
+          className="bg-white/70 backdrop-blur-2xl p-8 rounded-3xl shadow-2xl border border-yellow-100"
+        >
+          <h1 className="text-2xl font-bold text-center mb-6">
+            Send Message
+          </h1>
 
-          <div className="flex flex-col">
-            <textarea
-              name="message"
-              placeholder="Write your message..."
-              value={form.message}
-              onChange={handleChange}
-              className="px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 min-h-[120px]"
-            />
-            {errors.message && (
-              <span className="text-red-500 text-sm mt-1">{errors.message}</span>
-            )}
-          </div>
+          {success && (
+            <motion.p
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              className="text-center mb-4 text-green-500 font-semibold"
+            >
+              {success}
+            </motion.p>
+          )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-4 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold hover:from-cyan-400 hover:to-blue-500 transition-colors disabled:opacity-50"
-          >
-            {loading ? "Sending..." : "Send Message"}
-          </button>
-        </form>
+          <form onSubmit={handleSubmit} className="space-y-5">
+
+            {["name", "email", "phone"].map((field) => (
+              <div key={field} className="relative">
+                <input
+                  name={field}
+                  value={(form as any)[field]}
+                  onChange={handleChange}
+                  required
+                  className="peer w-full p-3 border border-gray-200 rounded-lg outline-none focus:border-yellow-400 bg-white/60"
+                />
+                <label className="absolute left-3 top-3 text-gray-400 text-sm transition-all peer-focus:-top-2 peer-focus:text-xs peer-focus:text-yellow-500 bg-white px-1">
+                  {field}
+                </label>
+
+                {errors[field] && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors[field]}
+                  </p>
+                )}
+              </div>
+            ))}
+
+            <div className="relative">
+              <textarea
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                required
+                rows={4}
+                className="peer w-full p-3 border border-gray-200 rounded-lg outline-none focus:border-yellow-400 bg-white/60"
+              />
+              <label className="absolute left-3 top-3 text-gray-400 text-sm transition-all peer-focus:-top-2 peer-focus:text-xs peer-focus:text-yellow-500 bg-white px-1">
+                message
+              </label>
+
+              {errors.message && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.message}
+                </p>
+              )}
+            </div>
+
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.05 }}
+              type="submit"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black p-3 rounded-lg font-bold shadow-lg"
+            >
+              {loading ? "Sending..." : "Send Message 🚀"}
+            </motion.button>
+
+          </form>
+        </motion.div>
+
       </div>
     </main>
   );

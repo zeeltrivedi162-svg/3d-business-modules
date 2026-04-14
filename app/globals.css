@@ -24,3 +24,85 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+body {
+  scroll-behavior: smooth;
+}
+html {
+  scroll-behavior: smooth;
+}
+.perspective {
+  perspective: 1000px;
+}
+.perspective {
+  perspective: 1200px;
+}
+
+.tilt {
+  transform-style: preserve-3d;
+}
+
+.glow-cursor {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0,255,255,0.15), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+}
+/* 🔥 SMOOTH 3D TRANSFORM */
+.transform-3d {
+  transform-style: preserve-3d;
+}
+
+.perspective {
+  perspective: 1200px;
+}
+
+/* ✨ SMOOTH TRANSITIONS */
+.smooth-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* 🌟 GLOW ANIMATION */
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.glow-animate {
+  animation: glowPulse 2s infinite;
+}
+
+/* ✨ SHINE EFFECT (OPTIONAL REUSE) */
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.5),
+    transparent
+  );
+  transition: 0.7s;
+}
+
+.shine:hover::before {
+  left: 100%;
+}
+.transform-3d { transform-style: preserve-3d; }
+.perspective { perspective: 1200px; }
+.smooth-transition { transition: all 0.3s ease-in-out; }
